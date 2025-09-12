@@ -4,6 +4,9 @@ A simple Wi-Fi monitoring dashboard for the ESP8266. This project shows the conn
 
 ---
 
+# Disclaimer
+In my initial HTML webpage string, AI was used for some parts as I have little HTML knowledge.
+
 ## Features
 
 - Real-time Wi-Fi status updates via AJAX (no page reload required)
