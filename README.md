@@ -32,5 +32,5 @@ A simple Wi-Fi monitoring dashboard for the ESP8266. This project shows the conn
 3. Replace the following with your Wi-Fi credentials:
 
 ```cpp
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
+const char* ssid = "YourWiFiSSID";
+const char* password = "YourWiFiPassword";
