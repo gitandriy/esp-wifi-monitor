@@ -31,7 +31,7 @@ In my initial HTML webpage string, AI was used for some parts as I have little H
 ## Setup Instructions
 
 1. Clone or download this repository.
-2. Open `main.ino` in Arduino IDE or PlatformIO.
+2. Open `esp-wifi-monitor.ino` in Arduino IDE or PlatformIO.
 3. Replace the following with your Wi-Fi credentials:
 
 ```cpp
