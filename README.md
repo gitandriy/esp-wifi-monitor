@@ -40,7 +40,6 @@ I fully understand how the ESP8266 server works, how the data flows between the 
 
 - ESP8266 (NodeMCU, Wemos D1 Mini, or similar)
 - USB cable for programming
-- Optional: Access to a Wi-Fi network
 
 ---
 
