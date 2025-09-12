@@ -4,8 +4,24 @@ A simple Wi-Fi monitoring dashboard for the ESP8266. This project shows the conn
 
 ---
 
-# Disclaimer
-In my initial HTML webpage string, AI was used for some parts as I have little HTML knowledge.
+## Disclaimer
+Some parts of this project were generated with AI assistance:
+
+- **AI-assisted:**  
+  - The HTML/JavaScript dashboard (`MAIN_page`)  
+  - The JSON endpoint (`handleStatus()`)
+
+- **Written and implemented by me:**  
+  - ESP8266 server setup, including defining routes and starting the server  
+  - Main loop with `server.handleClient()`  
+  - Integration of the dashboard and JSON endpoint  
+  - Serial monitor messages for IP and connection status  
+  - Adjustments and testing to ensure the project works on my network  
+
+I fully understand how the ESP8266 server works, how the data flows between the ESP and the webpage, and have learnt how to implement similar JSON endpoints myself.
+
+
+---
 
 ## Features
 
