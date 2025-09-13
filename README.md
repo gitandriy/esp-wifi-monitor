@@ -26,6 +26,7 @@ I fully understand how the ESP8266 server works, how the data flows between the 
 ## Features
 
 - Real-time Wi-Fi status updates via AJAX (no page reload required)
+- **OLED Display Support**: Real-time status display on SSD1306 OLED screen
 - Displays:
   - Connection status (Connected / Disconnected)
   - IP address
@@ -39,16 +40,59 @@ I fully understand how the ESP8266 server works, how the data flows between the 
 ## Hardware
 
 - ESP8266 (NodeMCU, Wemos D1 Mini, or similar)
+- **SSD1306 OLED Display (128x64, I2C)**
+  - VCC → 3.3V
+  - GND → GND  
+  - SDA → D2 (GPIO4)
+  - SCL → D1 (GPIO5)
 - USB cable for programming
 
 ---
 
 ## Setup Instructions
 
-1. Clone or download this repository.
-2. Open `esp-wifi-monitor.ino` in Arduino IDE or PlatformIO.
-3. Replace the following with your Wi-Fi credentials:
+1. **Install Required Libraries**
+   - In Arduino IDE, go to **Tools → Manage Libraries**
+   - Search and install:
+     - `Adafruit SSD1306` by Adafruit
+     - `Adafruit GFX Library` by Adafruit
+   
+2. **Hardware Connection**
+   - Connect the SSD1306 OLED display as shown in the Hardware section above
+   
+3. **Software Setup**
+   - Clone or download this repository
+   - Open `esp-wifi-monitor.ino` in Arduino IDE or PlatformIO
+   - Replace the following with your Wi-Fi credentials:
 
 ```cpp
 const char* ssid = "YourWiFiSSID";
 const char* password = "YourWiFiPassword";
+```
+
+4. **Upload the Code**
+   - Select your ESP8266 board in **Tools → Board**
+   - Select the correct port in **Tools → Port**
+   - Click **Upload**
+
+5. **Monitor Operation**
+   - Open **Serial Monitor** (115200 baud) to see connection status
+   - The OLED display will show:
+     - "WiFi Monitor" and "Starting..." during boot
+     - WiFi connection status, IP address, and signal strength when connected
+   - Access the web dashboard at the IP address shown on the OLED or Serial Monitor
+
+## OLED Display Information
+
+The OLED display updates every 5 seconds and shows:
+- **Title**: "ESP WiFi Monitor" 
+- **Status**: "Connected" or "Disconnected"
+- **IP Address**: Current local IP when connected
+- **RSSI**: Signal strength in dBm when connected
+
+If the OLED display doesn't work, check:
+- Wiring connections (especially SDA/SCL)
+- I2C address (default 0x3C)
+- Power supply (3.3V)
+
+---

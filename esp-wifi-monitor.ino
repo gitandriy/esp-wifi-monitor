@@ -1,8 +1,17 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 const char* ssid = "YourWiFiSSID";
 const char* password = "YourWiFiPassword";
+
+// OLED display configuration
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 ESP8266WebServer server(80); // creates web server on port 80
 
@@ -64,9 +73,52 @@ void handleRoot() {
   server.send_P(200, "text/html", MAIN_page);
 }
 
+// Function to initialize OLED display
+void initializeOLED() {
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    return;
+  }
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println(F("WiFi Monitor"));
+  display.println(F("Starting..."));
+  display.display();
+}
+
+// Function to update OLED with WiFi status
+void updateOLEDDisplay() {
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  
+  display.println(F("ESP WiFi Monitor"));
+  display.println(F("----------------"));
+  
+  if (WiFi.status() == WL_CONNECTED) {
+    display.println(F("Status: Connected"));
+    display.print(F("IP: "));
+    display.println(WiFi.localIP());
+    display.print(F("RSSI: "));
+    display.print(WiFi.RSSI());
+    display.println(F(" dBm"));
+  } else {
+    display.println(F("Status: Disconnected"));
+    display.println(F("Reconnecting..."));
+  }
+  
+  display.display();
+}
+
 void setup() {
   Serial.begin(115200);
   delay(1000); // allow serial monitor to start
+
+  // Initialize OLED display
+  initializeOLED();
 
   WiFi.begin(ssid, password);
   
@@ -77,6 +129,9 @@ void setup() {
 
   Serial.println("Connected to WiFi");
   Serial.println("In your browser, connect to http://" + WiFi.localIP().toString());
+  
+  // Update OLED with connection status
+  updateOLEDDisplay();
   
   // handles default route (root)
   server.on("/", handleRoot);
@@ -106,4 +161,11 @@ void handleStatus() { // creates json containing wifi info
 
 void loop() {
   server.handleClient(); // constantly checks for requests to esp8266
+  
+  // Update OLED display every 5 seconds
+  static unsigned long lastOLEDUpdate = 0;
+  if (millis() - lastOLEDUpdate > 5000) {
+    updateOLEDDisplay();
+    lastOLEDUpdate = millis();
+  }
 }
